@@ -47,7 +47,7 @@ function performUnitOfWork(fiber: FiberNode) {
 
 // * 如果没有子节点，遍历兄弟节点 （归）
 function completeUnitOfWork(fiber: FiberNode) {
-	let node: FiberNode | null = fiber;
+	const node: FiberNode | null = fiber;
 
 	do {
 		completeWork(node);
