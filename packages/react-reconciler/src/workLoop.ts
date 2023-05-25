@@ -10,7 +10,7 @@ function prepareFreshStack(fiber: FiberNode) {
 }
 
 // * init func, let the workInProgress point to a fiber node
-function renderRoot(root: FiberNode) {
+export function renderRoot(root: FiberNode) {
 	prepareFreshStack(root);
 
 	do {

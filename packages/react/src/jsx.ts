@@ -4,7 +4,7 @@ import type {
 	Key,
 	Ref,
 	Props,
-	ReactElement
+	ReactElementType
 } from '../../shared/ReactTypes';
 
 // To construct a ReactElement object
@@ -13,7 +13,7 @@ const ReactElement = (
 	key: Key,
 	ref: Ref,
 	props: Props
-): ReactElement => {
+): ReactElementType => {
 	const element = {
 		$$typeof: REACT_ELEMENT_TYPE,
 		type,
@@ -29,7 +29,7 @@ const ReactElement = (
 export const jsx = (
 	type: ElementType,
 	config: any,
-	...maybeChildren: ReactElement[]
+	...maybeChildren: ReactElementType[]
 ) => {
 	let key: Key = null;
 	let ref: Ref = null;

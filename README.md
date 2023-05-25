@@ -89,3 +89,16 @@ interface ReactElement {
 ```
 
 A jsx function is essentially
+
+## packing react module using Rollup
+
+```bash
+pnpm i -D -w rimraf rollup-plugin-generate-package-json rollup-plugin-typescript2 @rollup/plugin-commonjs
+```
+
+install plugins
+
+- rollup-plugin-generate-package-json
+- rollup-plugin-typescript2
+- @rollup/plugin-commonjs
+- rimraf - linux rm -rf command equivalent on windows
