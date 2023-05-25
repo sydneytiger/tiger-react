@@ -12,3 +12,10 @@ export interface ReactElementType {
 	ref: Ref;
 	__mark: string;
 }
+
+/**
+ * * action could be
+ * * this.setState({a: 1})
+ * * this.setState(({a: 0}) => ({a: 1}))
+ */
+export type Action<State> = State | ((prevState: State) => State);
