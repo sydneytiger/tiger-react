@@ -102,3 +102,37 @@ install plugins
 - rollup-plugin-typescript2
 - @rollup/plugin-commonjs
 - rimraf - linux rm -rf command equivalent on windows
+
+## Debug react locally approach 1
+
+use pnpm link to push the dist package to local global and run another react project locally.
+
+```bash
+cd dist/node_modules/react
+pnpm link --global
+```
+
+Now a global node_modules is created locally. To use it, let create a tiger-react-demo project and then run it locally.
+
+```javascript
+// index.js of tiger-react-demo
+import React from 'react';
+
+const jsx = (
+	<div>
+		Hello <span>tiger-react</span>
+	</div>
+);
+
+console.log('🐯 ~ React:', React);
+console.log('🐯 ~ jsx:', jsx);
+```
+
+```bash
+cd dev/tiger-react-demo
+pnpm link react --global
+```
+
+Now in the tiger-react-demo code, the 'import React from "react";' no longer point to local node_modules. It points to the global node_modules.
+
+Drawback: No hot refresh. After change, we have to manually run 'pnpm build:dev' and then rerun the demo 'npm start'
