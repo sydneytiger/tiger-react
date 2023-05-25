@@ -1,16 +1,49 @@
 import { beginWork } from './beginWork';
 import { completeWork } from './completeWork';
-import { FiberNode } from './fiber';
+import { createWorkInProgress, FiberNode, FiberRootNode } from './fiber';
+import { HostRoot } from './workTags';
 
 // * a global pointer pointing to the working fiber node
 let workInProgress: FiberNode | null = null;
 
-function prepareFreshStack(fiber: FiberNode) {
-	workInProgress = fiber;
+function prepareFreshStack(root: FiberRootNode) {
+	workInProgress = createWorkInProgress(root.current, {});
+}
+
+/**
+ * * connect the fiberRootNode's container and the renderRoot function below
+ * @param fiber the fiber node which triggered update
+ */
+export function scheduleUpdateOnFiber(fiber: FiberNode) {
+	// TODO 调度功能
+
+	const root = markUpdateFromFiberToRoot(fiber);
+	renderRoot(root);
+}
+
+/**
+ * * bubble up to the fiberRootNode
+ * @param fiber the fiber node which triggered update
+ */
+function markUpdateFromFiberToRoot(fiber: FiberNode) {
+	let node = fiber;
+	let parent = node.return;
+
+	while (parent !== null) {
+		node = parent;
+		parent = node.return;
+	}
+
+	if (node.tag === HostRoot) {
+		// * now the node is the hostRootFiber
+		return node.stateNode;
+	}
+
+	return null;
 }
 
 // * init func, let the workInProgress point to a fiber node
-export function renderRoot(root: FiberNode) {
+function renderRoot(root: FiberRootNode) {
 	prepareFreshStack(root);
 
 	do {

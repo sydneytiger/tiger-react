@@ -1,6 +1,7 @@
 import { Props, Key, Ref } from 'shared/ReactTypes';
 import { WorkTag } from './workTags';
 import { Flags, NoFlags } from './fiberFlags';
+import { Container } from 'hostConfig';
 
 export class FiberNode {
 	type: any;
@@ -16,9 +17,11 @@ export class FiberNode {
 	ref: Ref;
 
 	memoizedProps: Props | null;
+	memoizedState: any;
 
 	alternate: FiberNode | null;
 	flags: Flags;
+	updateQueue: unknown;
 
 	constructor(tag: WorkTag, pendingProps: Props, key: Key) {
 		// * instance type
@@ -49,12 +52,15 @@ export class FiberNode {
 
 		this.ref = null;
 
-		//! work unit data
+		//! work unit data 工作单元
 		//* pendingProps/memoizedProps store the props data from the ReactElement
 		//* pendingProps stores the data before work
 		//* memoizedProps stores the data after work
+		//* memoizedState stores the state data after work
 		this.pendingProps = pendingProps;
 		this.memoizedProps = null;
+		this.memoizedState = null;
+		this.updateQueue = null;
 
 		// * react stores two fiber node tree: current & workInProgress
 		// * current represent the current DOM
@@ -69,3 +75,58 @@ export class FiberNode {
 		this.flags = NoFlags;
 	}
 }
+
+export class FiberRootNode {
+	// * 指向hostRootFiber
+	container: Container;
+	current: FiberNode;
+	// ? 指向已经递归更新完成后的 hostRootFiber
+	finishedWork: FiberNode | null;
+
+	constructor(container: Container, hostRootFiber: FiberNode) {
+		this.container = container;
+		this.current = hostRootFiber;
+		hostRootFiber.stateNode = this;
+		this.finishedWork = null;
+	}
+}
+
+export const createWorkInProgress = (
+	current: FiberNode,
+	pendingProps: Props
+): FiberNode => {
+	let wip = current.alternate;
+	const {
+		tag,
+		key,
+		type,
+		stateNode,
+		updateQueue,
+		child,
+		memoizedProps,
+		memoizedState
+	} = current;
+
+	// * wip is null at first meaningful paint (FMP)
+	// * it is not be null after FMP.
+	if (wip === null) {
+		// mount
+		wip = new FiberNode(tag, pendingProps, key);
+		wip.stateNode = stateNode;
+
+		wip.alternate = current;
+		current.alternate = wip;
+	} else {
+		// update
+		wip.pendingProps = pendingProps;
+		wip.flags = NoFlags;
+	}
+
+	wip.type = type;
+	wip.updateQueue = updateQueue;
+	wip.child = child;
+	wip.memoizedProps = memoizedProps;
+	wip.memoizedState = memoizedState;
+
+	return wip;
+};

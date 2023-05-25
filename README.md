@@ -78,7 +78,7 @@ import { jsxs as _jsxs } from 'react/jsx-runtime';
 2. At runtime, React.jsx outputs ReactElement objects
 
 ```typescript
-interface ReactElement {
+interface ReactElementType {
 	$$typeof: symbol | number; // to identify a react element
 	type: ElementType;
 	key: Key;
@@ -133,6 +133,28 @@ cd dev/tiger-react-demo
 pnpm link react --global
 ```
 
-Now in the tiger-react-demo code, the 'import React from "react";' no longer point to local node_modules. It points to the global node_modules.
+Now in the tiger-react-demo code, the `import React from "react";` no longer point to local `node_modules`. It points to the global `node_modules`.
 
-Drawback: No hot refresh. After change, we have to manually run 'pnpm build:dev' and then rerun the demo 'npm start'
+Drawback: No hot refresh. After change, we have to manually run `pnpm build:dev` and then rerun the demo `npm start`
+
+## React component update
+
+There are three ways triggering update:
+
+1. `ReactDOM.createRoot().render()` or in old version `ReactDOM.render()`
+2. `this.setState()` class component
+3. The dispatch function returning from `useState` (the second item)
+
+When an update action dispatched from a component, the action bubble up to the root element and then start the `renderRoot` function to recursively iterate the fiber node tree.
+
+```javascript
+ReactDOM.createRoot(document.getElementById('root')).render(<App />);
+```
+
+The `ReactDOM.createRoot()` creates a `fiberRootNode`. `document.getElementById('root')` has its own fiber node called `hostRootFiber` and then `<App />`
+![alt text](./README-resources/fiberRootNode.png 'fiber root node')
+
+**fiberRootNode** is the root. All dispatch functions bubble up here and then start loop down.
+
+> 更新可能发生于任意组件，而更新流程是从根节点递归的
+> 需要一个统一的根节点保存通用信息 这个根节点就是 fiberRootNode
