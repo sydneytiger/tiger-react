@@ -158,3 +158,11 @@ The `ReactDOM.createRoot()` creates a `fiberRootNode`. `document.getElementById(
 
 > 更新可能发生于任意组件，而更新流程是从根节点递归的
 > 需要一个统一的根节点保存通用信息 这个根节点就是 fiberRootNode
+
+## Add **DEV** mark
+
+good for debug
+
+```bash
+pnpm i -d -w @rollup/plugin-replace
+```
