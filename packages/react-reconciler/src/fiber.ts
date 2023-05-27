@@ -21,6 +21,7 @@ export class FiberNode {
 
 	alternate: FiberNode | null;
 	flags: Flags;
+	subTreeFlags: Flags;
 	updateQueue: unknown;
 
 	constructor(tag: WorkTag, pendingProps: Props, key: Key) {
@@ -34,6 +35,7 @@ export class FiberNode {
 		this.key = key;
 
 		// * save the HostComponent's DOM
+		// * 保存着DOM节点
 		this.stateNode = null;
 
 		//! properties to link between fiber nodes
@@ -73,6 +75,8 @@ export class FiberNode {
 		// * like Placement, Update, then the ReactDOM uses flag to call DOM api
 		// * e.g. appendChild, removeChild
 		this.flags = NoFlags;
+		// * 用于保存子fiberNode种冒泡传上来的flags
+		this.subTreeFlags = NoFlags;
 	}
 }
 
@@ -120,6 +124,7 @@ export const createWorkInProgress = (
 		// update
 		wip.pendingProps = pendingProps;
 		wip.flags = NoFlags;
+		wip.subTreeFlags = NoFlags;
 	}
 
 	wip.type = type;

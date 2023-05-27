@@ -5,14 +5,14 @@ import { HostComponent, HostRoot, HostText } from './workTags';
 import { mountChildFibers, reconcileChildFibers } from './childFiber';
 
 /**
- * 例子:
- * <A><B/></A>
- * 当进入A的beginWork时, 通过对比B的current fiberNode和B的 reactElement
- * 生成B对应的wip fiberNode
+ * * 例子:
+ * * <A><B/></A>
+ * * 当进入A的beginWork时, 通过对比B的current fiberNode和B的 reactElement
+ * * 生成B对应的wip fiberNode
  */
 
 //! 递归中的递阶段
-export const beginWork = (wip: FiberNode) => {
+export const beginWork = (wip: FiberNode): FiberNode | null => {
 	// * will eventually return child fiber node
 	switch (wip.tag) {
 		case HostRoot:
@@ -24,7 +24,7 @@ export const beginWork = (wip: FiberNode) => {
 			return null;
 		default:
 			if (__DEV__) {
-				console.warn('🐯 ~ beginWork 未实现的类型 tag');
+				console.warn('🐯 ~ beginWork 未实现的类型 tag', wip);
 			}
 			return null;
 	}

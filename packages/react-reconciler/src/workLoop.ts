@@ -57,6 +57,13 @@ function renderRoot(root: FiberRootNode) {
 			workInProgress = null;
 		}
 	} while (true);
+
+	// * 这时候 wip fiberNode tree已经构建完毕
+	const finishedWork = root.current.alternate;
+	root.finishedWork = finishedWork;
+
+	// * wip fiberNode树 以及树种的flags执行具体的dom操作
+	// TODO commitRoot(root);
 }
 
 function workLoop() {
