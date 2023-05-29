@@ -14,3 +14,6 @@ export const appendInitialChild = (...arg: any) => {
 export const createTextInstance = (...arg: any) => {
 	return {} as any;
 };
+export const appendChildToContainer = (...arg: any) => {
+	return {} as any;
+};

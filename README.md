@@ -178,3 +178,9 @@ pnpm i -d -w @rollup/plugin-replace
 - schedule 阶段
 - render 阶段（beginWork completeWork）
 - commit 阶段（commitWork）
+
+## commit 阶段的 3 个子阶段
+
+- beforeMutation
+- mutation
+- layout
