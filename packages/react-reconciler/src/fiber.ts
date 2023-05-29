@@ -84,7 +84,7 @@ export class FiberRootNode {
 	// * 指向hostRootFiber
 	container: Container;
 	current: FiberNode;
-	// ? 指向已经递归更新完成后的 hostRootFiber
+	// * 指向render阶段workLoop执行完毕后得到的fiberNode树
 	finishedWork: FiberNode | null;
 
 	constructor(container: Container, hostRootFiber: FiberNode) {

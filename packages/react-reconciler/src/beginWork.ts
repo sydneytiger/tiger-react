@@ -56,7 +56,7 @@ const updateHostRoot = (wip: FiberNode) => {
  * ! HostComponent里无法触发更新
  */
 const updateHostComponent = (wip: FiberNode) => {
-	// * fiberNode.pendingProps和reactElement.pendingProps一样
+	// * 这里的fiberNode.pendingProps和reactElement.pendingProps一样
 	const nextProps = wip.pendingProps;
 	const nextChildren = nextProps.children;
 	reconcileChildren(wip, nextChildren);
@@ -64,7 +64,7 @@ const updateHostComponent = (wip: FiberNode) => {
 };
 
 /**
- * * 通过对比B的current fiberNode和B的 reactElement
+ * * 通过对比同一个节点的current fiberNode和新的 reactElement
  */
 const reconcileChildren = (wip: FiberNode, children?: ReactElementType) => {
 	const current = wip.alternate;

@@ -159,6 +159,10 @@ The `ReactDOM.createRoot()` creates a `fiberRootNode`. `document.getElementById(
 > 更新可能发生于任意组件，而更新流程是从根节点递归的
 > 需要一个统一的根节点保存通用信息 这个根节点就是 fiberRootNode
 
+## fiberNode updateQueue
+
+![alt text](./README-resources/react-updateQueue.png 'react updateQueue')
+
 ## Add **DEV** mark
 
 good for debug
@@ -166,3 +170,11 @@ good for debug
 ```bash
 pnpm i -d -w @rollup/plugin-replace
 ```
+
+## react 内部 3 个阶段：
+
+都在 react-reconcile package 里?
+
+- schedule 阶段
+- render 阶段（beginWork completeWork）
+- commit 阶段（commitWork）
