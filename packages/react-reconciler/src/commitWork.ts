@@ -58,7 +58,9 @@ const commitPlacement = (finishedWork: FiberNode) => {
 	const hostParent = getHostParent(finishedWork);
 
 	//* append finishedWork's DOM to hostParent
-	appendPlacementNodeIntoContainer(finishedWork, hostParent);
+	if (hostParent !== null) {
+		appendPlacementNodeIntoContainer(finishedWork, hostParent);
+	}
 };
 
 /**
@@ -73,7 +75,7 @@ const commitPlacement = (finishedWork: FiberNode) => {
  ** Tiger和Fly都是react节点 (FunctionComponent) 从Fly向上遍历寻找Parent
  ** 得到的结果是div 而不是Tiger
  */
-function getHostParent(fiber: FiberNode): Container {
+function getHostParent(fiber: FiberNode): Container | null {
 	let parent = fiber.return;
 	while (parent) {
 		const parentTag = parent.tag;
@@ -93,6 +95,8 @@ function getHostParent(fiber: FiberNode): Container {
 	if (__DEV__) {
 		console.warn('🐯 未找到host parent');
 	}
+
+	return null;
 }
 
 /**
@@ -108,7 +112,7 @@ function appendPlacementNodeIntoContainer(
 ) {
 	if (finishedWork.tag === HostComponent || finishedWork.tag === HostText) {
 		//* 宿主环境API接口方法
-		appendChildToContainer(finishedWork.stateNode, hostParent);
+		appendChildToContainer(hostParent, finishedWork.stateNode);
 		return;
 	}
 

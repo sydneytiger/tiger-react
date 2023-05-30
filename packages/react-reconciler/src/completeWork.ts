@@ -6,7 +6,7 @@ import {
 	appendInitialChild,
 	createTextInstance
 } from 'hostConfig';
-
+import { Container } from 'hostConfig';
 /**
  * * 需要解决的问题
  * * 1. 对于Host类型fiberNode: 构建离屏DOM树
@@ -21,27 +21,25 @@ export const completeWork = (wip: FiberNode): FiberNode | null => {
 	switch (wip.tag) {
 		case HostComponent:
 			if (current !== null && wip.stateNode) {
-				// update
-				// TODO
+				// TODO HostComponent update
 			} else {
 				// * mount 首屏渲染
 				// * 1. 构建DOM元素
-				const instanace = createInstance(wip.type, newProps);
+				const instance = createInstance(wip.type, newProps);
 				// * 2. 将DOM元素插入DOM树
-				appendAllChildren(instanace, wip);
-				wip.stateNode = instanace;
+				appendAllChildren(instance, wip);
+				wip.stateNode = instance;
 			}
 			bubbleProperties(wip);
 			return null;
 		case HostText:
 			if (current !== null && wip.stateNode) {
-				// update
-				// TODO
+				// TODO HostText update
 			} else {
 				// * mount 首屏渲染
 				// * 构建Text DOM元素
-				const instanace = createTextInstance(newProps.content);
-				wip.stateNode = instanace;
+				const instance = createTextInstance(newProps.content);
+				wip.stateNode = instance;
 			}
 			bubbleProperties(wip);
 			return null;
@@ -59,7 +57,7 @@ export const completeWork = (wip: FiberNode): FiberNode | null => {
 /**
  * * 在@param parent节点下插入@param wip节点
  */
-function appendAllChildren(parent: FiberNode, wip: FiberNode) {
+function appendAllChildren(parent: Container, wip: FiberNode) {
 	let node = wip.child;
 
 	// * 递归建构DOM节点以及子节点和兄弟节点

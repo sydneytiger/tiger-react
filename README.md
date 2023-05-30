@@ -184,3 +184,11 @@ pnpm i -d -w @rollup/plugin-replace
 - beforeMutation
 - mutation
 - layout
+
+## pack ReactDOM package
+
+install rollup alias plugin
+
+```bash
+pnpm i -D -w @rollup/plugin-alias
+```
