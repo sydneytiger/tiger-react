@@ -20,6 +20,7 @@ export function scheduleUpdateOnFiber(fiber: FiberNode) {
 	// TODO 调度功能
 
 	const root = markUpdateFromFiberToRoot(fiber);
+	console.log('🐯 ~ scheduleUpdateOnFiber ~ root:', root);
 	renderRoot(root);
 }
 
@@ -47,6 +48,7 @@ function markUpdateFromFiberToRoot(fiber: FiberNode) {
 // * init func, let the workInProgress point to a fiber node
 function renderRoot(root: FiberRootNode) {
 	prepareFreshStack(root);
+	console.log('🐯 ~ renderRoot ~ workInProgress:', workInProgress);
 
 	do {
 		try {
@@ -107,6 +109,7 @@ function workLoop() {
 function performUnitOfWork(fiber: FiberNode) {
 	// * next could be the child of fiber or null (fiber is a leaf node)
 	const next = beginWork(fiber);
+	console.log('🐯 ~ performUnitOfWork ~ fiber:', fiber);
 	fiber.memoizedProps = fiber.pendingProps;
 
 	if (next === null) {
@@ -120,17 +123,18 @@ function performUnitOfWork(fiber: FiberNode) {
 
 // * 如果没有子节点，遍历兄弟节点 （归）
 function completeUnitOfWork(fiber: FiberNode) {
-	const node: FiberNode | null = fiber;
+	let node: FiberNode | null = fiber;
 
 	do {
 		completeWork(node);
+		console.log('🐯 ~ completeUnitOfWork ~ node:', node);
 		const sibling = node.sibling;
 
 		if (sibling !== null) {
 			workInProgress = sibling;
 			return;
 		}
-
-		workInProgress = node.return;
+		node = node.return;
+		workInProgress = node;
 	} while (node !== null);
 }
