@@ -13,6 +13,17 @@ Use mono-repo instead of multi-repos
 - commit lint - git commit message format lint
 - rollup - packaging tool e.g. webpack
 
+```bash
+npm install -g pnpm
+pnpm i eslint -D -w
+pnpm i -D -w @typescript-eslint/eslint-plugin
+pnpm i prettier -D -w
+pnpm i eslint-config-prettier eslint-plugin-prettier -D -w
+pnpm i husky -D -w
+pnpm i commitlint @commitlint/cli @commitlint/config-conventional -D -w
+pnpm i -D -w rollup
+```
+
 ## file structure
 
 all code are under packages folder
@@ -94,6 +105,7 @@ A jsx function is essentially
 
 ```bash
 pnpm i -D -w rimraf rollup-plugin-generate-package-json rollup-plugin-typescript2 @rollup/plugin-commonjs
+
 ```
 
 install plugins
