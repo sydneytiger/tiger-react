@@ -57,10 +57,11 @@ export class FiberNode {
 		//! work unit data 工作单元
 		//* pendingProps/memoizedProps store the props data from the ReactElement
 		//* pendingProps stores the data before work
-		//* memoizedProps stores the data after work
-		//* memoizedState stores the state data after work
 		this.pendingProps = pendingProps;
+		//* memoizedProps stores the data after work
 		this.memoizedProps = null;
+		//* memoizedState stores the state data after work.
+		//* State of the fiber that was used to create the output. When processing updates it reflects the state that’s currently rendered on the screen.
 		this.memoizedState = null;
 		this.updateQueue = null;
 
