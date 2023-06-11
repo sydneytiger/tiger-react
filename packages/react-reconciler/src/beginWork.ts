@@ -1,8 +1,14 @@
 import { ReactElementType } from 'shared/ReactTypes';
 import { FiberNode } from './fiber';
 import { UpdateQueue, processUpdateQueue } from './updateQueue';
-import { HostComponent, HostRoot, HostText } from './workTags';
+import {
+	FunctionComponent,
+	HostComponent,
+	HostRoot,
+	HostText
+} from './workTags';
 import { mountChildFibers, reconcileChildFibers } from './childFiber';
+import { renderWithHooks } from './fiberHooks';
 
 /**
  * * 例子:
@@ -22,12 +28,20 @@ export const beginWork = (wip: FiberNode): FiberNode | null => {
 		case HostText:
 			// * HostText 没有子节点(leaf node) 所以没有beginWork逻辑
 			return null;
+		case FunctionComponent:
+			return updateFunctionComponent(wip);
 		default:
 			if (__DEV__) {
 				console.warn('🐯 ~ beginWork 未实现的类型 tag', wip);
 			}
 			return null;
 	}
+};
+
+const updateFunctionComponent = (wip: FiberNode) => {
+	const nextChildren = renderWithHooks(wip);
+	reconcileChildren(wip, nextChildren);
+	return wip.child;
 };
 
 /**
