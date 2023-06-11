@@ -12,6 +12,7 @@ import { FiberNode } from './fiber';
  */
 export const renderWithHooks = (wip: FiberNode) => {
 	const ComponentFunc = wip.type;
+	console.log('🐯 ~ renderWithHooks ~ ComponentFunc:', ComponentFunc);
 	const props = wip.pendingProps;
 	const children = ComponentFunc(props);
 

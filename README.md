@@ -204,3 +204,19 @@ install rollup alias plugin
 ```bash
 pnpm i -D -w @rollup/plugin-alias
 ```
+
+## Debug react locally approach 2
+
+leverage Vite to have live debugging
+
+```bash
+pnpm create vite
+```
+
+调试新组件:
+
+1. 在 tiger-react-vite 下面创建组件的测试文件夹 e.g. test-useState
+2. 复制 test-FunctionComponent 里的文件 修改 main.ts 里的测试 jsx
+3. 在根目录的 package.json 下修改 script 里的 vite:debug 指向新的文件夹
+4. terminal 里运行 pnpm vite:debug
+   这样就可以做到实时 debug

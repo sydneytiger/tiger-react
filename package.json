@@ -6,7 +6,8 @@
 	"scripts": {
 		"lint": "eslint --ext .js,.ts,.jsx,.tsx --fix --quiet ./packages",
 		"build:dev": "rimraf dist && rollup --bundleConfigAsCjs --config scripts/rollup/dev.config.js",
-		"link:global": "cd ./dist/node_modules/react && pnpm link --global && cd ../react-dom && pnpm link --global && cd ~/tiger-react"
+		"link:global": "cd ./dist/node_modules/react && pnpm link --global && cd ../react-dom && pnpm link --global && cd ~/tiger-react",
+		"vite:debug": "vite serve tiger-react-vite/test-FunctionComponent --config scripts/vite/vite.config.js --force"
 	},
 	"keywords": [],
 	"author": "",
@@ -29,7 +30,13 @@
 		"rollup": "^3.22.0",
 		"rollup-plugin-generate-package-json": "^3.2.0",
 		"rollup-plugin-typescript2": "^0.34.1",
-		"typescript": "^5.0.4"
+		"typescript": "^5.0.4",
+		"@types/react": "^18.0.37",
+		"@types/react-dom": "^18.0.11",
+		"@vitejs/plugin-react": "^4.0.0",
+		"eslint-plugin-react-hooks": "^4.6.0",
+		"eslint-plugin-react-refresh": "^0.3.4",
+		"vite": "^4.3.9"
 	},
 	"dependencies": {
 		"@rollup/plugin-replace": "^5.0.2"
